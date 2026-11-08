@@ -1,0 +1,1561 @@
+{
+  "meta": {
+    "project": "Saudi Supermarket Sales",
+    "source": "Saudi_Supermarket_Sales_100.xlsx - SalesData.xlsx",
+    "rows": 48,
+    "period": [
+      "2025-01-04",
+      "2025-07-24"
+    ],
+    "currency": "SAR",
+    "generated": "2026-11-08",
+    "table_name_in_dax": "Saudi_Supermarket_Sales"
+  },
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "w": 320,
+      "h": 1080,
+      "fill": "#005931"
+    },
+    "content": {
+      "x": 320,
+      "y": 0,
+      "w": 1600,
+      "h": 1080
+    }
+  },
+  "palette": {
+    "primary": "#005931",
+    "primary_dark": "#003D22",
+    "primary_mid": "#2E8B63",
+    "primary_soft": "#7FBF9F",
+    "primary_tint": "#E3F0E9",
+    "white": "#F8F8FF",
+    "ink": "#1F2A24",
+    "muted": "#6B7A72",
+    "gold": "#C9A227",
+    "risk": "#B3261E"
+  },
+  "kpis": [
+    {
+      "id": "K1",
+      "label_ar": "صافي المبيعات (بدون ضريبة)",
+      "label_en": "Net Sales",
+      "value": 1530.17,
+      "measure": "Net Sales"
+    },
+    {
+      "id": "K2",
+      "label_ar": "الإجمالي شامل الضريبة",
+      "label_en": "Total Sales Incl VAT",
+      "value": 1759.66,
+      "measure": "Total Sales Incl VAT"
+    },
+    {
+      "id": "K3",
+      "label_ar": "إجمالي الخصومات",
+      "label_en": "Discount SAR",
+      "value": 86.43,
+      "measure": "Discount SAR"
+    },
+    {
+      "id": "K4",
+      "label_ar": "معدل الخصم %",
+      "label_en": "Discount Rate %",
+      "value": 5.35,
+      "measure": "Discount Rate %"
+    },
+    {
+      "id": "K5",
+      "label_ar": "عدد المعاملات",
+      "label_en": "Transactions",
+      "value": 48,
+      "measure": "Transactions"
+    },
+    {
+      "id": "K6",
+      "label_ar": "متوسط السلة",
+      "label_en": "Avg Basket",
+      "value": 31.88,
+      "measure": "Avg Basket"
+    },
+    {
+      "id": "K7",
+      "label_ar": "الوحدات المباعة",
+      "label_en": "Units Sold",
+      "value": 99,
+      "measure": "Units Sold"
+    }
+  ],
+  "business_questions": [
+    {
+      "q": "أي مناطق ومدن تقود المبيعات وأيها متأخر؟",
+      "insights": [
+        "I03",
+        "I04"
+      ]
+    },
+    {
+      "q": "هل المبيعات تنمو أم تتراجع شهريًا؟",
+      "insights": [
+        "I01"
+      ]
+    },
+    {
+      "q": "هل الخصومات تحقق قيمة أم تأكل الهامش؟",
+      "insights": [
+        "I02",
+        "I10",
+        "I11"
+      ]
+    },
+    {
+      "q": "من أهم عملائنا وكيف نرفع قيمة سلتهم؟",
+      "insights": [
+        "I05",
+        "I06"
+      ]
+    },
+    {
+      "q": "أي منتجات وفئات تقود الأداء؟",
+      "insights": [
+        "I07",
+        "I08",
+        "I09"
+      ]
+    },
+    {
+      "q": "متى يشتري العملاء وبماذا يدفعون؟",
+      "insights": [
+        "I12",
+        "I13"
+      ]
+    },
+    {
+      "q": "ما مدى اعتماد المبيعات على فواتير قليلة؟",
+      "insights": [
+        "I14"
+      ]
+    }
+  ],
+  "insights": [
+    {
+      "id": "I01",
+      "tier": 1,
+      "theme": "Trend",
+      "status": "risk",
+      "title_ar": "المبيعات تتركز في الربع الأول ثم تتراجع",
+      "title_en": "Sales peak in Q1 then fade",
+      "headline": {
+        "q1_share_pct": 65.2,
+        "march_net": 514.66,
+        "march_share_pct": 33.6,
+        "june_net": 53.4
+      },
+      "evidence": {
+        "monthly": [
+          {
+            "name": "2025-01",
+            "tx": 10,
+            "units": 15,
+            "net": 235.32,
+            "share_pct": 15.4,
+            "avg_basket": 23.53,
+            "discount_rate_pct": 2.8
+          },
+          {
+            "name": "2025-02",
+            "tx": 6,
+            "units": 17,
+            "net": 247.02,
+            "share_pct": 16.1,
+            "avg_basket": 41.17,
+            "discount_rate_pct": 2.1
+          },
+          {
+            "name": "2025-03",
+            "tx": 12,
+            "units": 32,
+            "net": 514.66,
+            "share_pct": 33.6,
+            "avg_basket": 42.89,
+            "discount_rate_pct": 4.6
+          },
+          {
+            "name": "2025-04",
+            "tx": 6,
+            "units": 12,
+            "net": 217.15,
+            "share_pct": 14.2,
+            "avg_basket": 36.19,
+            "discount_rate_pct": 5.9
+          },
+          {
+            "name": "2025-05",
+            "tx": 7,
+            "units": 13,
+            "net": 191.51,
+            "share_pct": 12.5,
+            "avg_basket": 27.36,
+            "discount_rate_pct": 6.9
+          },
+          {
+            "name": "2025-06",
+            "tx": 2,
+            "units": 3,
+            "net": 53.4,
+            "share_pct": 3.5,
+            "avg_basket": 26.7,
+            "discount_rate_pct": 19.1
+          },
+          {
+            "name": "2025-07",
+            "tx": 5,
+            "units": 7,
+            "net": 71.11,
+            "share_pct": 4.6,
+            "avg_basket": 14.22,
+            "discount_rate_pct": 11.7
+          }
+        ],
+        "quarterly": [
+          {
+            "name": "Q1-2025",
+            "tx": 28,
+            "units": 64,
+            "net": 997.0,
+            "share_pct": 65.2,
+            "avg_basket": 35.61,
+            "discount_rate_pct": 3.5
+          },
+          {
+            "name": "Q2-2025",
+            "tx": 15,
+            "units": 28,
+            "net": 462.06,
+            "share_pct": 30.2,
+            "avg_basket": 30.8,
+            "discount_rate_pct": 8.0
+          },
+          {
+            "name": "Q3-2025",
+            "tx": 5,
+            "units": 7,
+            "net": 71.11,
+            "share_pct": 4.6,
+            "avg_basket": 14.22,
+            "discount_rate_pct": 11.7
+          }
+        ]
+      },
+      "so_what_ar": "الربع الأول = 65.2% من صافي المبيعات، ومارس وحده 33.6% (514.66 ر.س، +108% عن فبراير). بعده تنخفض الأرقام إلى 53.40 في يونيو.",
+      "action_ar": "افحص ما الذي حدث في مارس (موسم/عرض/حجم تذاكر كبيرة) وكرره، وتأكد هل تراجع يونيو-يوليو حقيقي أم نقص في تغطية البيانات.",
+      "visual": {
+        "type": "combo",
+        "x": "Month",
+        "y": [
+          "Net Sales"
+        ],
+        "line": "Net Sales MoM %",
+        "note": "Column + line، علّم مارس بلون مميز"
+      },
+      "dax_measures": [
+        "Net Sales",
+        "Net Sales PM",
+        "Net Sales MoM %"
+      ],
+      "confidence": "low",
+      "caveat": "يونيو فيه معاملتان فقط ويوليو ينتهي 24-07؛ جزء من الانخفاض قد يكون بسبب حجم العينة."
+    },
+    {
+      "id": "I02",
+      "tier": 1,
+      "theme": "Discount",
+      "status": "risk",
+      "title_ar": "الخصومات تتصاعد بينما المبيعات تنخفض",
+      "title_en": "Discount creep as sales decline",
+      "headline": {
+        "rate_q1_pct": 3.5,
+        "rate_q2_pct": 8.0,
+        "rate_q3_pct": 11.7,
+        "overall_pct": 5.35
+      },
+      "evidence": {
+        "monthly_discount_rate": [
+          {
+            "m": "2025-01",
+            "pct": 2.8
+          },
+          {
+            "m": "2025-02",
+            "pct": 2.1
+          },
+          {
+            "m": "2025-03",
+            "pct": 4.6
+          },
+          {
+            "m": "2025-04",
+            "pct": 5.9
+          },
+          {
+            "m": "2025-05",
+            "pct": 6.9
+          },
+          {
+            "m": "2025-06",
+            "pct": 19.1
+          },
+          {
+            "m": "2025-07",
+            "pct": 11.7
+          }
+        ]
+      },
+      "so_what_ar": "معدل الخصم ارتفع من 2.8% في يناير إلى 19.1% في يونيو (Q1 3.5% ← Q2 8.0% ← Q3 11.7%) دون أن يعوّض ذلك تراجع المبيعات.",
+      "action_ar": "ضع سقفًا للخصم (مثلًا 10%) واربط أي خصم أعمق بهدف قابل للقياس.",
+      "visual": {
+        "type": "line",
+        "x": "Month",
+        "y": [
+          "Discount Rate %"
+        ],
+        "note": "أضف خط حد أقصى 10% باللون الأحمر"
+      },
+      "dax_measures": [
+        "Discount Rate %",
+        "Discount SAR"
+      ],
+      "confidence": "low",
+      "caveat": "عدد المعاملات في يونيو قليل جدًا (2)."
+    },
+    {
+      "id": "I03",
+      "tier": 1,
+      "theme": "Geography",
+      "status": "warn",
+      "title_ar": "تركّز جغرافي عالٍ في المنطقة الغربية وجدة",
+      "title_en": "Geographic concentration: Western region and Jeddah",
+      "headline": {
+        "western_share_pct": 56.6,
+        "jeddah_share_pct": 36.6,
+        "west_east_share_pct": 80.2
+      },
+      "evidence": {
+        "regions": [
+          {
+            "name": "Western",
+            "tx": 23,
+            "units": 59,
+            "net": 866.37,
+            "share_pct": 56.6,
+            "avg_basket": 37.67,
+            "discount_rate_pct": 4.5
+          },
+          {
+            "name": "Eastern",
+            "tx": 10,
+            "units": 19,
+            "net": 361.55,
+            "share_pct": 23.6,
+            "avg_basket": 36.16,
+            "discount_rate_pct": 5.7
+          },
+          {
+            "name": "Northern",
+            "tx": 4,
+            "units": 8,
+            "net": 125.4,
+            "share_pct": 8.2,
+            "avg_basket": 31.35,
+            "discount_rate_pct": 7.5
+          },
+          {
+            "name": "Southern",
+            "tx": 5,
+            "units": 6,
+            "net": 101.44,
+            "share_pct": 6.6,
+            "avg_basket": 20.29,
+            "discount_rate_pct": 4.5
+          },
+          {
+            "name": "Central",
+            "tx": 6,
+            "units": 7,
+            "net": 75.41,
+            "share_pct": 4.9,
+            "avg_basket": 12.57,
+            "discount_rate_pct": 10.5
+          }
+        ],
+        "cities": [
+          {
+            "name": "Jeddah",
+            "tx": 15,
+            "units": 40,
+            "net": 559.74,
+            "share_pct": 36.6,
+            "avg_basket": 37.32,
+            "discount_rate_pct": 4.7
+          },
+          {
+            "name": "Al Khobar",
+            "tx": 6,
+            "units": 9,
+            "net": 210.57,
+            "share_pct": 13.8,
+            "avg_basket": 35.09,
+            "discount_rate_pct": 7.6
+          },
+          {
+            "name": "Madinah",
+            "tx": 3,
+            "units": 9,
+            "net": 167.9,
+            "share_pct": 11.0,
+            "avg_basket": 55.97,
+            "discount_rate_pct": 2.1
+          },
+          {
+            "name": "Dammam",
+            "tx": 4,
+            "units": 10,
+            "net": 150.98,
+            "share_pct": 9.9,
+            "avg_basket": 37.74,
+            "discount_rate_pct": 2.9
+          },
+          {
+            "name": "Makkah",
+            "tx": 5,
+            "units": 10,
+            "net": 138.73,
+            "share_pct": 9.1,
+            "avg_basket": 27.75,
+            "discount_rate_pct": 6.6
+          },
+          {
+            "name": "Tabuk",
+            "tx": 4,
+            "units": 8,
+            "net": 125.4,
+            "share_pct": 8.2,
+            "avg_basket": 31.35,
+            "discount_rate_pct": 7.5
+          },
+          {
+            "name": "Abha",
+            "tx": 5,
+            "units": 6,
+            "net": 101.44,
+            "share_pct": 6.6,
+            "avg_basket": 20.29,
+            "discount_rate_pct": 4.5
+          },
+          {
+            "name": "Riyadh",
+            "tx": 6,
+            "units": 7,
+            "net": 75.41,
+            "share_pct": 4.9,
+            "avg_basket": 12.57,
+            "discount_rate_pct": 10.5
+          }
+        ]
+      },
+      "so_what_ar": "الغربية 56.6% من صافي المبيعات، وجدة وحدها 36.6%، والغربية + الشرقية = 80.2%.",
+      "action_ar": "خطر اعتماد على سوق واحد؛ ضع خطة توسع/تنشيط للمناطق الأضعف.",
+      "visual": {
+        "type": "bar+map",
+        "x": "Region/City",
+        "y": [
+          "Net Sales"
+        ],
+        "note": "Filled map أو bar مرتب تنازليًا"
+      },
+      "dax_measures": [
+        "Net Sales",
+        "Net Sales % of Total"
+      ],
+      "confidence": "medium",
+      "caveat": null
+    },
+    {
+      "id": "I04",
+      "tier": 1,
+      "theme": "Geography",
+      "status": "warn",
+      "title_ar": "الرياض: أضعف سلة وأعلى خصم",
+      "title_en": "Riyadh: weakest basket, deepest discount",
+      "headline": {
+        "riyadh_share_pct": 4.9,
+        "riyadh_avg_basket": 12.57,
+        "riyadh_discount_pct": 10.5,
+        "madinah_avg_basket": 55.97
+      },
+      "evidence": {
+        "cities": [
+          {
+            "name": "Jeddah",
+            "tx": 15,
+            "units": 40,
+            "net": 559.74,
+            "share_pct": 36.6,
+            "avg_basket": 37.32,
+            "discount_rate_pct": 4.7
+          },
+          {
+            "name": "Al Khobar",
+            "tx": 6,
+            "units": 9,
+            "net": 210.57,
+            "share_pct": 13.8,
+            "avg_basket": 35.09,
+            "discount_rate_pct": 7.6
+          },
+          {
+            "name": "Madinah",
+            "tx": 3,
+            "units": 9,
+            "net": 167.9,
+            "share_pct": 11.0,
+            "avg_basket": 55.97,
+            "discount_rate_pct": 2.1
+          },
+          {
+            "name": "Dammam",
+            "tx": 4,
+            "units": 10,
+            "net": 150.98,
+            "share_pct": 9.9,
+            "avg_basket": 37.74,
+            "discount_rate_pct": 2.9
+          },
+          {
+            "name": "Makkah",
+            "tx": 5,
+            "units": 10,
+            "net": 138.73,
+            "share_pct": 9.1,
+            "avg_basket": 27.75,
+            "discount_rate_pct": 6.6
+          },
+          {
+            "name": "Tabuk",
+            "tx": 4,
+            "units": 8,
+            "net": 125.4,
+            "share_pct": 8.2,
+            "avg_basket": 31.35,
+            "discount_rate_pct": 7.5
+          },
+          {
+            "name": "Abha",
+            "tx": 5,
+            "units": 6,
+            "net": 101.44,
+            "share_pct": 6.6,
+            "avg_basket": 20.29,
+            "discount_rate_pct": 4.5
+          },
+          {
+            "name": "Riyadh",
+            "tx": 6,
+            "units": 7,
+            "net": 75.41,
+            "share_pct": 4.9,
+            "avg_basket": 12.57,
+            "discount_rate_pct": 10.5
+          }
+        ]
+      },
+      "so_what_ar": "الرياض: 4.9% فقط من المبيعات، متوسط سلة 12.57 ر.س (الأدنى)، وخصم 10.5% (الأعلى). بالمقابل المدينة المنورة أعلى سلة (55.97) بخصم 2.1% فقط.",
+      "action_ar": "الرياض تبدو سوقًا يُباع فيه بخصم وبسلة صغيرة؛ راجع التشكيلة والتسعير هناك.",
+      "visual": {
+        "type": "scatter",
+        "x": "Avg Basket",
+        "y": "Discount Rate %",
+        "size": "Net Sales",
+        "detail": "City"
+      },
+      "dax_measures": [
+        "Avg Basket",
+        "Discount Rate %"
+      ],
+      "confidence": "low",
+      "caveat": "الرياض 6 معاملات فقط."
+    },
+    {
+      "id": "I05",
+      "tier": 1,
+      "theme": "Customer",
+      "status": "good",
+      "title_ar": "عملاء الولاء: نصف المبيعات بأقل خصم",
+      "title_en": "Loyalty members: half of sales at the lowest discount",
+      "headline": {
+        "loyalty_share_pct": 48.9,
+        "loyalty_tx_share_pct": 41.7,
+        "loyalty_basket": 37.42,
+        "regular_basket": 27.89,
+        "uplift_pct": 34.2
+      },
+      "evidence": {
+        "segments": [
+          {
+            "name": "Loyalty Member",
+            "tx": 20,
+            "units": 42,
+            "net": 748.4,
+            "share_pct": 48.9,
+            "avg_basket": 37.42,
+            "discount_rate_pct": 2.8
+          },
+          {
+            "name": "Regular",
+            "tx": 23,
+            "units": 39,
+            "net": 641.43,
+            "share_pct": 41.9,
+            "avg_basket": 27.89,
+            "discount_rate_pct": 6.8
+          },
+          {
+            "name": "New Customer",
+            "tx": 5,
+            "units": 18,
+            "net": 140.34,
+            "share_pct": 9.2,
+            "avg_basket": 28.07,
+            "discount_rate_pct": 11.3
+          }
+        ]
+      },
+      "so_what_ar": "الولاء 20 من 48 معاملة (41.7%) لكنهم 48.9% من المبيعات، متوسط سلتهم 37.42 مقابل 27.89 للعميل العادي (+34.2%) بخصم 2.8% فقط مقابل 6.8%.",
+      "action_ar": "الولاء هو المحرك الأربح؛ حوّل العملاء العاديين إلى أعضاء بدل زيادة الخصومات.",
+      "visual": {
+        "type": "bar",
+        "x": "CustomerSegment",
+        "y": [
+          "Avg Basket"
+        ],
+        "note": "مع Discount Rate % كـ tooltip"
+      },
+      "dax_measures": [
+        "Loyalty Share %",
+        "Avg Basket",
+        "Discount Rate %"
+      ],
+      "confidence": "medium",
+      "caveat": null
+    },
+    {
+      "id": "I06",
+      "tier": 2,
+      "theme": "Customer",
+      "status": "warn",
+      "title_ar": "العملاء الجدد: أعلى خصم (11.3%) بكميات أكبر",
+      "title_en": "New customers: highest discount, more units",
+      "headline": {
+        "new_discount_pct": 11.3,
+        "new_units_per_tx": 3.6,
+        "loyalty_units_per_tx": 2.1,
+        "regular_units_per_tx": 1.7
+      },
+      "evidence": {
+        "segments": [
+          {
+            "name": "Loyalty Member",
+            "tx": 20,
+            "units": 42,
+            "net": 748.4,
+            "share_pct": 48.9,
+            "avg_basket": 37.42,
+            "discount_rate_pct": 2.8
+          },
+          {
+            "name": "Regular",
+            "tx": 23,
+            "units": 39,
+            "net": 641.43,
+            "share_pct": 41.9,
+            "avg_basket": 27.89,
+            "discount_rate_pct": 6.8
+          },
+          {
+            "name": "New Customer",
+            "tx": 5,
+            "units": 18,
+            "net": 140.34,
+            "share_pct": 9.2,
+            "avg_basket": 28.07,
+            "discount_rate_pct": 11.3
+          }
+        ]
+      },
+      "so_what_ar": "العميل الجديد يشتري 3.6 وحدة/معاملة (مقابل 2.1 للولاء و1.7 للعادي) لكن بخصم 11.3% وسلة 28.07 فقط.",
+      "action_ar": "الخصم يجذب الكمية لكن لا يرفع قيمة السلة؛ اربط خصم الترحيب بعضوية الولاء.",
+      "visual": {
+        "type": "clustered_bar",
+        "x": "CustomerSegment",
+        "y": [
+          "Units per Transaction",
+          "Discount Rate %"
+        ]
+      },
+      "dax_measures": [
+        "Units per Transaction",
+        "Discount Rate %"
+      ],
+      "confidence": "low",
+      "caveat": "5 معاملات للعملاء الجدد."
+    },
+    {
+      "id": "I07",
+      "tier": 1,
+      "theme": "Product",
+      "status": "warn",
+      "title_ar": "ثلاثة منتجات = 34% من المبيعات و10 من 22 = 80%",
+      "title_en": "Product concentration: 3 SKUs = 34%, 10 of 22 = 80%",
+      "headline": {
+        "top3_share_pct": 34.1,
+        "products_for_80pct": 10,
+        "total_products": 22,
+        "top3": [
+          "Baby Diapers Pack",
+          "Chicken Nuggets 750g",
+          "Cooking Oil 1.5L"
+        ]
+      },
+      "evidence": {
+        "products": [
+          {
+            "name": "Baby Diapers Pack",
+            "tx": 4,
+            "units": 4,
+            "net": 199.8,
+            "share_pct": 13.1,
+            "avg_basket": 49.95,
+            "discount_rate_pct": 7.5
+          },
+          {
+            "name": "Chicken Nuggets 750g",
+            "tx": 3,
+            "units": 8,
+            "net": 179.4,
+            "share_pct": 11.7,
+            "avg_basket": 59.8,
+            "discount_rate_pct": 2.5
+          },
+          {
+            "name": "Cooking Oil 1.5L",
+            "tx": 4,
+            "units": 9,
+            "net": 142.63,
+            "share_pct": 9.3,
+            "avg_basket": 35.66,
+            "discount_rate_pct": 9.4
+          },
+          {
+            "name": "Shampoo 400ml",
+            "tx": 1,
+            "units": 5,
+            "net": 130.0,
+            "share_pct": 8.5,
+            "avg_basket": 130.0,
+            "discount_rate_pct": 0.0
+          },
+          {
+            "name": "Dates 1kg",
+            "tx": 2,
+            "units": 4,
+            "net": 128.0,
+            "share_pct": 8.4,
+            "avg_basket": 64.0,
+            "discount_rate_pct": 0.0
+          },
+          {
+            "name": "Laundry Detergent 2kg",
+            "tx": 3,
+            "units": 4,
+            "net": 116.25,
+            "share_pct": 7.6,
+            "avg_basket": 38.75,
+            "discount_rate_pct": 6.2
+          },
+          {
+            "name": "Arabic Coffee 250g",
+            "tx": 2,
+            "units": 4,
+            "net": 112.0,
+            "share_pct": 7.3,
+            "avg_basket": 56.0,
+            "discount_rate_pct": 0.0
+          },
+          {
+            "name": "Toothpaste 120ml",
+            "tx": 4,
+            "units": 10,
+            "net": 89.21,
+            "share_pct": 5.8,
+            "avg_basket": 22.3,
+            "discount_rate_pct": 8.5
+          },
+          {
+            "name": "Eggs 30-pack",
+            "tx": 1,
+            "units": 3,
+            "net": 65.41,
+            "share_pct": 4.3,
+            "avg_basket": 65.41,
+            "discount_rate_pct": 5.0
+          },
+          {
+            "name": "Bottled Water 12-pack",
+            "tx": 2,
+            "units": 7,
+            "net": 63.5,
+            "share_pct": 4.1,
+            "avg_basket": 31.75,
+            "discount_rate_pct": 9.3
+          }
+        ]
+      },
+      "so_what_ar": "حفاضات الأطفال 13.1% + ناجتس الدجاج 11.7% + زيت الطبخ 9.3% = 34.1%. نحتاج 10 منتجات من 22 للوصول إلى 80%.",
+      "action_ar": "حافظ على توفر المنتجات الثلاثة دائمًا واختبر عروض ربط (bundles) معها.",
+      "visual": {
+        "type": "pareto",
+        "x": "Product",
+        "y": [
+          "Net Sales"
+        ],
+        "line": "Cumulative %"
+      },
+      "dax_measures": [
+        "Net Sales",
+        "Product Rank",
+        "Cumulative Net Share %",
+        "Top 3 Products Share %"
+      ],
+      "confidence": "medium",
+      "caveat": null
+    },
+    {
+      "id": "I08",
+      "tier": 1,
+      "theme": "Product",
+      "status": "good",
+      "title_ar": "منتجات تُباع بسعر كامل: خمسة منتجات لم تُخصم أبدًا = 26.4%",
+      "title_en": "Never-discounted products still sell",
+      "headline": {
+        "share_pct": 26.4,
+        "products": [
+          "Shampoo 400ml",
+          "Dates 1kg",
+          "Arabic Coffee 250g",
+          "Cheddar Cheese 200g",
+          "Tomatoes 1kg"
+        ],
+        "premium_three_share_pct": 24.2
+      },
+      "evidence": {
+        "products": [
+          {
+            "name": "Shampoo 400ml",
+            "net": 130.0
+          },
+          {
+            "name": "Dates 1kg",
+            "net": 128.0
+          },
+          {
+            "name": "Arabic Coffee 250g",
+            "net": 112.0
+          },
+          {
+            "name": "Cheddar Cheese 200g",
+            "net": 29.0
+          },
+          {
+            "name": "Tomatoes 1kg",
+            "net": 5.5
+          }
+        ]
+      },
+      "so_what_ar": "شامبو 400 مل، تمر 1 كجم، قهوة عربية 250 جم، جبن شيدر، طماطم: بدون أي خصم وتساهم بـ 26.4% من المبيعات (الثلاثة الأوائل وحدهم 24.2%).",
+      "action_ar": "المنتجات المميزة لا تحتاج خصمًا؛ ركّز عليها في العرض بدل تخفيض سعرها.",
+      "visual": {
+        "type": "bar",
+        "x": "Product",
+        "y": [
+          "Net Sales"
+        ],
+        "note": "فلتر: Discount SAR = 0"
+      },
+      "dax_measures": [
+        "Never-Discounted Products Share %"
+      ],
+      "confidence": "medium",
+      "caveat": null
+    },
+    {
+      "id": "I09",
+      "tier": 1,
+      "theme": "Category",
+      "status": "info",
+      "title_ar": "الفئات: البقالة الأكبر، والمجمدات الأعلى قيمة بأقل خصم",
+      "title_en": "Categories: Grocery largest, Frozen best ticket at lowest discount",
+      "headline": {
+        "grocery_share_pct": 28.4,
+        "frozen_basket": 59.8,
+        "frozen_discount_pct": 2.5,
+        "snacks_tx": 8,
+        "snacks_share_pct": 6.6,
+        "produce_bakery_share_pct": 1.0
+      },
+      "evidence": {
+        "categories": [
+          {
+            "name": "Grocery",
+            "tx": 12,
+            "units": 27,
+            "net": 433.98,
+            "share_pct": 28.4,
+            "avg_basket": 36.16,
+            "discount_rate_pct": 4.9
+          },
+          {
+            "name": "Personal Care",
+            "tx": 5,
+            "units": 15,
+            "net": 219.21,
+            "share_pct": 14.3,
+            "avg_basket": 43.84,
+            "discount_rate_pct": 3.6
+          },
+          {
+            "name": "Baby",
+            "tx": 4,
+            "units": 4,
+            "net": 199.8,
+            "share_pct": 13.1,
+            "avg_basket": 49.95,
+            "discount_rate_pct": 7.5
+          },
+          {
+            "name": "Frozen",
+            "tx": 3,
+            "units": 8,
+            "net": 179.4,
+            "share_pct": 11.7,
+            "avg_basket": 59.8,
+            "discount_rate_pct": 2.5
+          },
+          {
+            "name": "Beverages",
+            "tx": 5,
+            "units": 16,
+            "net": 136.0,
+            "share_pct": 8.9,
+            "avg_basket": 27.2,
+            "discount_rate_pct": 8.1
+          },
+          {
+            "name": "Household",
+            "tx": 4,
+            "units": 5,
+            "net": 127.73,
+            "share_pct": 8.3,
+            "avg_basket": 31.93,
+            "discount_rate_pct": 7.1
+          },
+          {
+            "name": "Dairy",
+            "tx": 5,
+            "units": 9,
+            "net": 117.85,
+            "share_pct": 7.7,
+            "avg_basket": 23.57,
+            "discount_rate_pct": 4.1
+          },
+          {
+            "name": "Snacks",
+            "tx": 8,
+            "units": 13,
+            "net": 100.8,
+            "share_pct": 6.6,
+            "avg_basket": 12.6,
+            "discount_rate_pct": 6.7
+          },
+          {
+            "name": "Bakery",
+            "tx": 1,
+            "units": 1,
+            "net": 9.9,
+            "share_pct": 0.6,
+            "avg_basket": 9.9,
+            "discount_rate_pct": 10.0
+          },
+          {
+            "name": "Produce",
+            "tx": 1,
+            "units": 1,
+            "net": 5.5,
+            "share_pct": 0.4,
+            "avg_basket": 5.5,
+            "discount_rate_pct": 0.0
+          }
+        ]
+      },
+      "so_what_ar": "البقالة 28.4% (12 معاملة). المجمدات: أعلى متوسط سلة 59.80 بخصم 2.5%. السناكس 8 معاملات لكن 6.6% فقط (سلة 12.60). الخضار والمخبوزات معاملة واحدة لكل منهما (1.0% مجتمعتين).",
+      "action_ar": "المجمدات فرصة نمو بهامش أفضل؛ والخضار/المخبوزات فجوة تغطية تحتاج مراجعة.",
+      "visual": {
+        "type": "treemap",
+        "group": "Category",
+        "values": "Net Sales",
+        "tooltip": [
+          "Avg Basket",
+          "Discount Rate %"
+        ]
+      },
+      "dax_measures": [
+        "Net Sales % of Total",
+        "Avg Basket",
+        "Discount Rate %"
+      ],
+      "confidence": "medium",
+      "caveat": null
+    },
+    {
+      "id": "I10",
+      "tier": 1,
+      "theme": "Discount",
+      "status": "risk",
+      "title_ar": "الخصم الأعمق من 5% لا يرفع الكمية",
+      "title_en": "Discounts deeper than 5% do not lift units",
+      "headline": {
+        "units_per_tx_by_band": {
+          "0%": 1.81,
+          "5%": 2.75,
+          "10%": 2.29,
+          "15%": 1.75,
+          "20%": 2.25
+        },
+        "tx_by_band": {
+          "0%": 21,
+          "5%": 8,
+          "10%": 7,
+          "15%": 8,
+          "20%": 4
+        },
+        "deep_discount_tx": 19,
+        "deep_discount_tx_pct": 39.6,
+        "deep_share_of_discount_pct": 81.3,
+        "discounted_tx_pct": 56.2
+      },
+      "evidence": {
+        "bands": [
+          {
+            "band": "0%",
+            "tx": 21,
+            "avg_units": 1.81,
+            "discount_sar": 0.0,
+            "net": 784.75
+          },
+          {
+            "band": "5%",
+            "tx": 8,
+            "avg_units": 2.75,
+            "discount_sar": 16.16,
+            "net": 306.94
+          },
+          {
+            "band": "10%",
+            "tx": 7,
+            "avg_units": 2.29,
+            "discount_sar": 24.0,
+            "net": 216.0
+          },
+          {
+            "band": "15%",
+            "tx": 8,
+            "avg_units": 1.75,
+            "discount_sar": 22.37,
+            "net": 126.88
+          },
+          {
+            "band": "20%",
+            "tx": 4,
+            "avg_units": 2.25,
+            "discount_sar": 23.9,
+            "net": 95.6
+          }
+        ]
+      },
+      "so_what_ar": "56.2% من المعاملات عليها خصم. شريحة 5% تعطي أعلى كمية (2.75 وحدة)، أما 15% و20% فتعطي 1.75 و2.25. الخصم ≥10% يخص 19 معاملة (39.6%) لكنه يستهلك 81.3% من قيمة الخصومات.",
+      "action_ar": "الخصم الأعمق يكلّف ولا يحرّك الكمية؛ ثبّت الخصم عند 5% كحد افتراضي.",
+      "visual": {
+        "type": "column",
+        "x": "Discount Band",
+        "y": [
+          "Units per Transaction"
+        ],
+        "secondary": "Discount SAR"
+      },
+      "dax_measures": [
+        "Units per Transaction",
+        "Discount SAR",
+        "Deep Discount (>=10%) Share of Discount SAR %"
+      ],
+      "confidence": "low",
+      "caveat": "شرائح 15% و20% صغيرة (8 و4 معاملات)."
+    },
+    {
+      "id": "I11",
+      "tier": 2,
+      "theme": "Discount",
+      "status": "info",
+      "title_ar": "الفئات الأعلى خصمًا: المخبوزات والمشروبات والأطفال",
+      "title_en": "Highest-discount categories",
+      "headline": {
+        "rates": {
+          "Grocery": 4.9,
+          "Personal Care": 3.6,
+          "Baby": 7.5,
+          "Frozen": 2.5,
+          "Beverages": 8.1,
+          "Household": 7.1,
+          "Dairy": 4.1,
+          "Snacks": 6.7,
+          "Bakery": 10.0,
+          "Produce": 0.0
+        }
+      },
+      "evidence": {
+        "categories": [
+          {
+            "name": "Grocery",
+            "tx": 12,
+            "units": 27,
+            "net": 433.98,
+            "share_pct": 28.4,
+            "avg_basket": 36.16,
+            "discount_rate_pct": 4.9
+          },
+          {
+            "name": "Personal Care",
+            "tx": 5,
+            "units": 15,
+            "net": 219.21,
+            "share_pct": 14.3,
+            "avg_basket": 43.84,
+            "discount_rate_pct": 3.6
+          },
+          {
+            "name": "Baby",
+            "tx": 4,
+            "units": 4,
+            "net": 199.8,
+            "share_pct": 13.1,
+            "avg_basket": 49.95,
+            "discount_rate_pct": 7.5
+          },
+          {
+            "name": "Frozen",
+            "tx": 3,
+            "units": 8,
+            "net": 179.4,
+            "share_pct": 11.7,
+            "avg_basket": 59.8,
+            "discount_rate_pct": 2.5
+          },
+          {
+            "name": "Beverages",
+            "tx": 5,
+            "units": 16,
+            "net": 136.0,
+            "share_pct": 8.9,
+            "avg_basket": 27.2,
+            "discount_rate_pct": 8.1
+          },
+          {
+            "name": "Household",
+            "tx": 4,
+            "units": 5,
+            "net": 127.73,
+            "share_pct": 8.3,
+            "avg_basket": 31.93,
+            "discount_rate_pct": 7.1
+          },
+          {
+            "name": "Dairy",
+            "tx": 5,
+            "units": 9,
+            "net": 117.85,
+            "share_pct": 7.7,
+            "avg_basket": 23.57,
+            "discount_rate_pct": 4.1
+          },
+          {
+            "name": "Snacks",
+            "tx": 8,
+            "units": 13,
+            "net": 100.8,
+            "share_pct": 6.6,
+            "avg_basket": 12.6,
+            "discount_rate_pct": 6.7
+          },
+          {
+            "name": "Bakery",
+            "tx": 1,
+            "units": 1,
+            "net": 9.9,
+            "share_pct": 0.6,
+            "avg_basket": 9.9,
+            "discount_rate_pct": 10.0
+          },
+          {
+            "name": "Produce",
+            "tx": 1,
+            "units": 1,
+            "net": 5.5,
+            "share_pct": 0.4,
+            "avg_basket": 5.5,
+            "discount_rate_pct": 0.0
+          }
+        ]
+      },
+      "so_what_ar": "المخبوزات 10.0%، المشروبات 8.1%، الأطفال 7.5%، المنزلية 7.1% مقابل 0% للخضار و2.5% للمجمدات.",
+      "action_ar": "راجع سياسة الخصم لكل فئة؛ المشروبات والأطفال تأخذان خصمًا عاليًا.",
+      "visual": {
+        "type": "bar",
+        "x": "Category",
+        "y": [
+          "Discount Rate %"
+        ]
+      },
+      "dax_measures": [
+        "Discount Rate %"
+      ],
+      "confidence": "low",
+      "caveat": null
+    },
+    {
+      "id": "I12",
+      "tier": 2,
+      "theme": "Time",
+      "status": "info",
+      "title_ar": "الأحد والاثنين = 41.8%، والثلاثاء أضعف يوم بأعلى خصم",
+      "title_en": "Sun–Mon carry 42%; Tuesday weakest with deepest discount",
+      "headline": {
+        "sun_mon_share_pct": 41.8,
+        "tuesday_share_pct": 9.0,
+        "tuesday_discount_pct": 11.4,
+        "friday_basket": 46.55
+      },
+      "evidence": {
+        "days": [
+          {
+            "name": "Sunday",
+            "tx": 10,
+            "units": 23,
+            "net": 336.15,
+            "share_pct": 22.0,
+            "avg_basket": 33.62,
+            "discount_rate_pct": 4.6
+          },
+          {
+            "name": "Monday",
+            "tx": 9,
+            "units": 16,
+            "net": 302.88,
+            "share_pct": 19.8,
+            "avg_basket": 33.65,
+            "discount_rate_pct": 5.1
+          },
+          {
+            "name": "Tuesday",
+            "tx": 6,
+            "units": 14,
+            "net": 137.92,
+            "share_pct": 9.0,
+            "avg_basket": 22.99,
+            "discount_rate_pct": 11.4
+          },
+          {
+            "name": "Wednesday",
+            "tx": 6,
+            "units": 14,
+            "net": 235.75,
+            "share_pct": 15.4,
+            "avg_basket": 39.29,
+            "discount_rate_pct": 5.5
+          },
+          {
+            "name": "Thursday",
+            "tx": 7,
+            "units": 13,
+            "net": 140.86,
+            "share_pct": 9.2,
+            "avg_basket": 20.12,
+            "discount_rate_pct": 5.1
+          },
+          {
+            "name": "Friday",
+            "tx": 4,
+            "units": 7,
+            "net": 186.21,
+            "share_pct": 12.2,
+            "avg_basket": 46.55,
+            "discount_rate_pct": 3.2
+          },
+          {
+            "name": "Saturday",
+            "tx": 6,
+            "units": 12,
+            "net": 190.4,
+            "share_pct": 12.4,
+            "avg_basket": 31.73,
+            "discount_rate_pct": 4.3
+          }
+        ]
+      },
+      "so_what_ar": "الأحد 22.0% والاثنين 19.8%. الثلاثاء 9.0% فقط رغم أعلى خصم (11.4%). الجمعة أعلى متوسط سلة (46.55).",
+      "action_ar": "الثلاثاء يأخذ خصمًا دون عائد؛ والجمعة فرصة لعروض السلال الكبيرة.",
+      "visual": {
+        "type": "column",
+        "x": "DayName",
+        "y": [
+          "Net Sales"
+        ],
+        "line": "Avg Basket"
+      },
+      "dax_measures": [
+        "Net Sales",
+        "Sun-Mon Net Share %",
+        "Avg Basket"
+      ],
+      "confidence": "low",
+      "caveat": "عدد المعاملات في كل يوم بين 4 و10."
+    },
+    {
+      "id": "I13",
+      "tier": 2,
+      "theme": "Payment",
+      "status": "info",
+      "title_ar": "75% من المبيعات بطرق دفع إلكترونية، وعملاء الولاء يدفعون كاش أكثر",
+      "title_en": "75% digital payments; loyalty members use cash most",
+      "headline": {
+        "digital_share_pct": 75.2,
+        "cash_share_pct": 24.8,
+        "card_share_pct": 34.2,
+        "loyalty_cash_tx": 8,
+        "loyalty_cash_pct": 40.0,
+        "regular_cash_pct": 13.0,
+        "regular_applepay_pct": 34.8
+      },
+      "evidence": {
+        "payments": [
+          {
+            "name": "Card",
+            "tx": 14,
+            "units": 28,
+            "net": 523.69,
+            "share_pct": 34.2,
+            "avg_basket": 37.41,
+            "discount_rate_pct": 5.1
+          },
+          {
+            "name": "Cash",
+            "tx": 12,
+            "units": 26,
+            "net": 379.58,
+            "share_pct": 24.8,
+            "avg_basket": 31.63,
+            "discount_rate_pct": 5.1
+          },
+          {
+            "name": "Mada",
+            "tx": 11,
+            "units": 21,
+            "net": 314.67,
+            "share_pct": 20.6,
+            "avg_basket": 28.61,
+            "discount_rate_pct": 6.6
+          },
+          {
+            "name": "Apple Pay",
+            "tx": 11,
+            "units": 24,
+            "net": 312.23,
+            "share_pct": 20.4,
+            "avg_basket": 28.38,
+            "discount_rate_pct": 4.7
+          }
+        ]
+      },
+      "so_what_ar": "البطاقة 34.2%، كاش 24.8%، مدى 20.6%، Apple Pay 20.4%. 40% من معاملات الولاء كاش مقابل 13% للعميل العادي، والعادي يفضل Apple Pay (34.8%).",
+      "action_ar": "ادمج برنامج الولاء مع الدفع الإلكتروني لتتبع أفضل للعملاء.",
+      "visual": {
+        "type": "donut",
+        "legend": "PaymentMethod",
+        "values": "Net Sales"
+      },
+      "dax_measures": [
+        "Digital Payment Share %",
+        "Cash Share %"
+      ],
+      "confidence": "low",
+      "caveat": null
+    },
+    {
+      "id": "I14",
+      "tier": 2,
+      "theme": "Risk",
+      "status": "warn",
+      "title_ar": "المبيعات متقلبة: 5 تذاكر = 30% من الإجمالي",
+      "title_en": "Lumpy sales: 5 tickets = 30%",
+      "headline": {
+        "top5_share_pct": 30.0,
+        "top5_tx_share_pct": 10.4,
+        "mean_basket": 31.88,
+        "median_basket": 21.0
+      },
+      "evidence": {
+        "top5": [
+          {
+            "invoice": "INV-250309-042",
+            "city": "Madinah",
+            "product": "Shampoo 400ml",
+            "qty": 5,
+            "net": 130.0,
+            "segment": "Loyalty Member"
+          },
+          {
+            "invoice": "INV-250222-005",
+            "city": "Jeddah",
+            "product": "Chicken Nuggets 750g",
+            "qty": 5,
+            "net": 115.0,
+            "segment": "Regular"
+          },
+          {
+            "invoice": "INV-250129-090",
+            "city": "Dammam",
+            "product": "Arabic Coffee 250g",
+            "qty": 3,
+            "net": 84.0,
+            "segment": "Loyalty Member"
+          },
+          {
+            "invoice": "INV-250307-084",
+            "city": "Jeddah",
+            "product": "Eggs 30-pack",
+            "qty": 3,
+            "net": 65.41,
+            "segment": "Regular"
+          },
+          {
+            "invoice": "INV-250210-079",
+            "city": "Jeddah",
+            "product": "Dates 1kg",
+            "qty": 2,
+            "net": 64.0,
+            "segment": "Loyalty Member"
+          }
+        ]
+      },
+      "so_what_ar": "أكبر 5 فواتير (10.4% من المعاملات) = 30.0% من المبيعات. متوسط السلة 31.88 مقابل وسيط 21.00 (توزيع منحرف).",
+      "action_ar": "استخدم الوسيط بجانب المتوسط في التقارير حتى لا تضلّلك الفواتير الكبيرة.",
+      "visual": {
+        "type": "table",
+        "columns": [
+          "InvoiceID",
+          "City",
+          "Product",
+          "Net Sales"
+        ],
+        "note": "Top N = 5"
+      },
+      "dax_measures": [
+        "Top 5 Tickets Share %",
+        "Avg Basket",
+        "Median Basket"
+      ],
+      "confidence": "medium",
+      "caveat": null
+    },
+    {
+      "id": "I15",
+      "tier": 1,
+      "theme": "DataQuality",
+      "status": "info",
+      "title_ar": "جودة البيانات: نظيفة لكن العينة صغيرة",
+      "title_en": "Data quality: clean but small",
+      "headline": {
+        "rows": 48,
+        "period_start": "2025-01-04",
+        "period_end": "2025-07-24",
+        "nulls": 0,
+        "products": 22,
+        "categories": 10,
+        "cities": 8,
+        "vat_rate": 0.15
+      },
+      "evidence": {
+        "checks": [
+          "Gross = Qty × Unit price",
+          "Discount = Gross × Discount %",
+          "Net = Gross − Discount",
+          "VAT = 15% × Net",
+          "Total = Net + VAT",
+          "City ↔ Region 1:1",
+          "Product ↔ Price/Category 1:1",
+          "TransactionID unique"
+        ],
+        "all_passed": true
+      },
+      "so_what_ar": "كل معادلات المبيعات والخصم والضريبة صحيحة (0 أخطاء)، لا قيم مفقودة، لا تكرار. لكن الملف اسمه _100 وفيه 48 صفًا فقط (4 يناير → 24 يوليو 2025).",
+      "action_ar": "تحقق هل توجد 52 معاملة ناقصة؛ حتى ذلك الحين اعتبر الاستنتاجات على مستوى المدينة/اليوم اتجاهات وليست حقائق.",
+      "visual": {
+        "type": "card",
+        "note": "أضف تنبيه صغير في الداشبورد: عدد الصفوف وفترة البيانات"
+      },
+      "dax_measures": [
+        "Transactions"
+      ],
+      "confidence": "high",
+      "caveat": null
+    }
+  ],
+  "expected_measure_values": {
+    "Net Sales": 1530.17,
+    "Gross Sales": 1616.6,
+    "Discount SAR": 86.43,
+    "Total Sales Incl VAT": 1759.66,
+    "VAT Amount": 229.49,
+    "Transactions": 48,
+    "Units Sold": 99,
+    "Avg Basket": 31.88,
+    "Units per Transaction": 2.06,
+    "Discount Rate %": 5.35,
+    "Discounted Txn %": 56.2,
+    "Loyalty Share %": 48.9,
+    "Loyalty Basket Uplift vs Regular %": 34.2,
+    "Digital Payment Share %": 75.2,
+    "Cash Share %": 24.8,
+    "Top 3 Products Share %": 34.1,
+    "Never-Discounted Products Share %": 26.4,
+    "Top 5 Tickets Share %": 30.0,
+    "Deep Discount (>=10%) Share of Discount SAR %": 81.3,
+    "Sun-Mon Net Share %": 41.8,
+    "Western Region Share %": 56.6,
+    "Jeddah Share %": 36.6,
+    "Q1 Share %": 65.2,
+    "Median Basket": 21.0
+  }
+}

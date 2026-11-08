@@ -1,0 +1,115 @@
+// =====================================================================
+// Saudi Supermarket Sales — DAX Measures Library
+// Table name used: 'Saudi_Supermarket_Sales'  (Find & Replace if yours differs)
+// Every measure lists its EXPECTED value on the full dataset (48 rows) so you can verify it.
+// Create a "_Measures" table (Enter data -> empty) and keep all measures there.
+// =====================================================================
+
+// ---------- 0) Date table (Modeling > New table), then Mark as date table + relate [Date] ----------
+Dim Date =
+VAR _min = DATE ( YEAR ( MIN ( 'Saudi_Supermarket_Sales'[Date] ) ), 1, 1 )
+VAR _max = DATE ( YEAR ( MAX ( 'Saudi_Supermarket_Sales'[Date] ) ), 12, 31 )
+RETURN
+ADDCOLUMNS (
+    CALENDAR ( _min, _max ),
+    "Year", YEAR ( [Date] ),
+    "Quarter", "Q" & QUARTER ( [Date] ),
+    "MonthNo", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "MMM" ),
+    "YearMonth", FORMAT ( [Date], "yyyy-MM" ),
+    "DayName", FORMAT ( [Date], "dddd" ),
+    "DayNo", WEEKDAY ( [Date], 1 )          // Sunday = 1
+)
+// Sort: Month by MonthNo, DayName by DayNo
+
+// ---------- 0b) Calculated column on the fact table ----------
+// Discount Band =
+// SWITCH ( TRUE (),
+//     'Saudi_Supermarket_Sales'[DiscountPct] = 0,    "0%",
+//     'Saudi_Supermarket_Sales'[DiscountPct] <= 0.05, "5%",
+//     'Saudi_Supermarket_Sales'[DiscountPct] <= 0.10, "10%",
+//     'Saudi_Supermarket_Sales'[DiscountPct] <= 0.15, "15%",
+//     "20%" )
+
+// ---------- 1) Core KPIs ----------
+Net Sales = SUM ( 'Saudi_Supermarket_Sales'[NetSalesSAR_ExVAT] )                    // 1,530.17
+Gross Sales = SUM ( 'Saudi_Supermarket_Sales'[GrossSalesSAR_ExVAT] )                // 1,616.60
+Discount SAR = SUM ( 'Saudi_Supermarket_Sales'[DiscountSAR] )                       // 86.43
+VAT Amount = SUM ( 'Saudi_Supermarket_Sales'[VATAmountSAR] )                        // 229.49
+Total Sales Incl VAT = SUM ( 'Saudi_Supermarket_Sales'[TotalSalesSAR_InclVAT] )     // 1,759.66
+Transactions = DISTINCTCOUNT ( 'Saudi_Supermarket_Sales'[TransactionID] )           // 48
+Units Sold = SUM ( 'Saudi_Supermarket_Sales'[Quantity] )                            // 99
+Avg Basket = DIVIDE ( [Net Sales], [Transactions] )                                 // 31.88
+Units per Transaction = DIVIDE ( [Units Sold], [Transactions] )                     // 2.06
+Discount Rate % = DIVIDE ( [Discount SAR], [Gross Sales] )                          // 5.35%  (format as %)
+Discounted Txn % =
+DIVIDE (
+    CALCULATE ( [Transactions], 'Saudi_Supermarket_Sales'[DiscountPct] > 0 ),
+    [Transactions]
+)                                                                                   // 56.2%
+Median Basket =
+MEDIANX ( VALUES ( 'Saudi_Supermarket_Sales'[TransactionID] ), CALCULATE ( [Net Sales] ) )   // 21.00
+
+// ---------- 2) Share of total ----------
+Net Sales % of Total = DIVIDE ( [Net Sales], CALCULATE ( [Net Sales], ALLSELECTED () ) )
+// Region/City: Western = 56.6%, Jeddah = 36.6%
+
+// ---------- 3) Time intelligence (needs Dim Date related to [Date]) ----------
+Net Sales PM = CALCULATE ( [Net Sales], DATEADD ( 'Dim Date'[Date], -1, MONTH ) )
+Net Sales MoM % = DIVIDE ( [Net Sales] - [Net Sales PM], [Net Sales PM] )           // Mar vs Feb = +108.3%
+Q1 Share % =
+DIVIDE ( CALCULATE ( [Net Sales], 'Dim Date'[Quarter] = "Q1" ), CALCULATE ( [Net Sales], ALLSELECTED ( 'Dim Date' ) ) )   // 65.2%
+Sun-Mon Net Share % =
+DIVIDE ( CALCULATE ( [Net Sales], 'Dim Date'[DayName] IN { "Sunday", "Monday" } ), CALCULATE ( [Net Sales], ALLSELECTED ( 'Dim Date' ) ) )   // 41.8%
+
+// ---------- 4) Customer ----------
+Loyalty Net Sales = CALCULATE ( [Net Sales], 'Saudi_Supermarket_Sales'[CustomerSegment] = "Loyalty Member" )
+Loyalty Share % = DIVIDE ( [Loyalty Net Sales], CALCULATE ( [Net Sales], ALL ( 'Saudi_Supermarket_Sales'[CustomerSegment] ) ) )   // 48.9%
+Loyalty Basket Uplift vs Regular % =
+VAR _loy = CALCULATE ( [Avg Basket], 'Saudi_Supermarket_Sales'[CustomerSegment] = "Loyalty Member" )
+VAR _reg = CALCULATE ( [Avg Basket], 'Saudi_Supermarket_Sales'[CustomerSegment] = "Regular" )
+RETURN DIVIDE ( _loy - _reg, _reg )                                                 // +34.2%
+
+// ---------- 5) Product ----------
+Product Rank = RANKX ( ALL ( 'Saudi_Supermarket_Sales'[Product] ), [Net Sales], , DESC, DENSE )
+Top 3 Products Share % =
+VAR _t = TOPN ( 3, ALL ( 'Saudi_Supermarket_Sales'[Product] ), [Net Sales], DESC )
+RETURN DIVIDE ( SUMX ( _t, [Net Sales] ), CALCULATE ( [Net Sales], ALL ( 'Saudi_Supermarket_Sales'[Product] ) ) )   // 34.1%
+Cumulative Net Share % =    // Pareto line
+VAR _cur = [Net Sales]
+VAR _all = ADDCOLUMNS ( ALL ( 'Saudi_Supermarket_Sales'[Product] ), "@s", [Net Sales] )
+RETURN DIVIDE ( SUMX ( FILTER ( _all, [@s] >= _cur ), [@s] ), SUMX ( _all, [@s] ) )
+Never-Discounted Products Share % =
+VAR _p = ADDCOLUMNS ( ALL ( 'Saudi_Supermarket_Sales'[Product] ), "@n", [Net Sales], "@d", [Discount SAR] )
+RETURN DIVIDE ( SUMX ( FILTER ( _p, [@d] = 0 ), [@n] ), SUMX ( _p, [@n] ) )         // 26.4%
+
+// ---------- 6) Discount ----------
+Deep Discount (>=10%) Share of Discount SAR % =
+DIVIDE ( CALCULATE ( [Discount SAR], 'Saudi_Supermarket_Sales'[DiscountPct] >= 0.10 ), [Discount SAR] )   // 81.3%
+
+// ---------- 7) Payment ----------
+Digital Payment Share % =
+DIVIDE (
+    CALCULATE ( [Net Sales], 'Saudi_Supermarket_Sales'[PaymentMethod] IN { "Card", "Mada", "Apple Pay" } ),
+    CALCULATE ( [Net Sales], ALL ( 'Saudi_Supermarket_Sales'[PaymentMethod] ) )
+)                                                                                   // 75.2%
+Cash Share % = 1 - [Digital Payment Share %]                                        // 24.8% (when unfiltered)
+
+// ---------- 8) Concentration risk ----------
+Top 5 Tickets Share % =
+VAR _t = TOPN ( 5, ALL ( 'Saudi_Supermarket_Sales'[TransactionID] ), CALCULATE ( SUM ( 'Saudi_Supermarket_Sales'[NetSalesSAR_ExVAT] ) ), DESC )
+RETURN DIVIDE ( SUMX ( _t, CALCULATE ( SUM ( 'Saudi_Supermarket_Sales'[NetSalesSAR_ExVAT] ) ) ), CALCULATE ( [Net Sales], ALL ( 'Saudi_Supermarket_Sales' ) ) )   // 30.0%
+
+// ---------- 9) Conditional-format colors (use "Field value" formatting) ----------
+Discount Status Color =
+SWITCH ( TRUE (), [Discount Rate %] > 0.08, "#B3261E", [Discount Rate %] > 0.05, "#C9A227", "#005931" )
+Growth Status Color =
+SWITCH ( TRUE (), [Net Sales MoM %] < 0, "#B3261E", [Net Sales MoM %] > 0, "#005931", "#6B7A72" )
+
+// ---------- 10) Dynamic narrative (for text cards / tooltips) ----------
+Top Region Text =
+VAR _r = TOPN ( 1, ALL ( 'Saudi_Supermarket_Sales'[Region] ), [Net Sales], DESC )
+RETURN MAXX ( _r, 'Saudi_Supermarket_Sales'[Region] ) & " leads with " & FORMAT ( DIVIDE ( MAXX ( _r, [Net Sales] ), CALCULATE ( [Net Sales], ALL ( 'Saudi_Supermarket_Sales'[Region] ) ) ), "0.0%" ) & " of net sales"
+Top Product Text =
+VAR _p = TOPN ( 1, ALL ( 'Saudi_Supermarket_Sales'[Product] ), [Net Sales], DESC )
+RETURN MAXX ( _p, 'Saudi_Supermarket_Sales'[Product] ) & " — SAR " & FORMAT ( MAXX ( _p, [Net Sales] ), "#,##0.00" )
