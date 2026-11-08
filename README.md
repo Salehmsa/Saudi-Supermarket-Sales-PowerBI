@@ -2,7 +2,11 @@
 
 Executive Power BI dashboard on a sample of Saudi supermarket transactions (48 rows, Jan–Jul 2025, SAR). Two pages: an **Executive Overview** (native visuals) and an interactive **HTML Report** (DAX-generated, with written insights).
 
-![Dashboard](docs/dashboard.png)
+![Executive Overview](docs/dashboard.png)
+
+**Interactive HTML Report page** (DAX-generated, recalculates with the slicers):
+
+![HTML Report](docs/html_report.png)
 
 ## Key numbers
 
@@ -34,7 +38,7 @@ The Western region drives 56.6% of net sales. Discounts peaked in June at 19.1% 
 | `dax/` | Core measures (`Saudi_Supermarket_Measures.dax`) and the 13 HTML-report measures (`Saudi_Supermarket_HTML_Blocks.dax`) |
 | `theme/` | Power BI theme (JSON) |
 | `data/` | Sample dataset (xlsx) |
-| `docs/` | Dashboard image, insights spec, LinkedIn carousel (PDF) |
+| `docs/` | Dashboard images (both pages), insights spec, LinkedIn carousel (PDF) |
 
 ## Data model
 
