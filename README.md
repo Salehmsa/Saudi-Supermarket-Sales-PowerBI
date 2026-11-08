@@ -1,6 +1,6 @@
 # Saudi Supermarket Sales: Power BI Dashboard
 
-Executive Power BI dashboard on a sample of Saudi supermarket transactions (48 rows, Jan–Jul 2025, SAR). One page: KPIs on top, trends in the middle, drivers below.
+Executive Power BI dashboard on a sample of Saudi supermarket transactions (48 rows, Jan–Jul 2025, SAR). Two pages: an **Executive Overview** (native visuals) and an interactive **HTML Report** (DAX-generated, with written insights).
 
 ![Dashboard](docs/dashboard.png)
 
@@ -25,12 +25,13 @@ The Western region drives 56.6% of net sales. Discounts peaked in June at 19.1% 
 - **Full cross-filtering** across Region, City, Category and Customer Segment slicers, and between charts.
 - **Dynamic insight lines** (top region, top product) that change with every filter.
 - **Custom JSON theme** applied across all visuals.
+- **Interactive HTML Report page** built entirely with DAX measures (the HTML Content visual renders one measure, `Report HTML`). It has 6 KPI cards (including VAT and Top City), monthly trend with discount chips, category mix, region and city performance, customer segments, payment methods, top products, a discount-impact table by depth band, and four action recommendations. Every card carries a written insight that recalculates with the slicers, which are synced across both pages.
 
 ## Repository layout
 
 | Folder | Content |
 |---|---|
-| `dax/` | All DAX measures |
+| `dax/` | Core measures (`Saudi_Supermarket_Measures.dax`) and the 13 HTML-report measures (`Saudi_Supermarket_HTML_Blocks.dax`) |
 | `theme/` | Power BI theme (JSON) |
 | `data/` | Sample dataset (xlsx) |
 | `docs/` | Dashboard image, insights spec, LinkedIn carousel (PDF) |
@@ -47,7 +48,8 @@ The Western region drives 56.6% of net sales. Discounts peaked in June at 19.1% 
 3. Open **DAX query view**, paste the contents of `dax/Saudi_Supermarket_Measures.dax`, and click **Update model with changes**.
 4. Import the theme: **View → Themes → Browse for themes** and select `theme/Saudi_Supermarket_Theme_v2.json`.
 5. Build the visuals: 6 cards (`Net Sales`, `Avg Basket`, `Discount Rate %`, `Transactions`, `Loyalty Share %`, `Digital Payment Share %`) and the five charts, then add the four slicers.
-6. For the Discount Rate card: **Format → Callout value → Color → fx → Field value → `Discount Status Color`**.
+6. For the HTML Report page: install the **HTML Content** custom visual, run `dax/Saudi_Supermarket_HTML_Blocks.dax` in DAX query view (**Update model with changes**), and put the `Report HTML` measure in the visual's Values well. Copy the four slicers to the page with **Sync slicers** on.
+7. For the Discount Rate card: **Format → Callout value → Color → fx → Field value → `Discount Status Color`**.
 
 ## Business questions the dashboard answers
 
@@ -55,6 +57,11 @@ The Western region drives 56.6% of net sales. Discounts peaked in June at 19.1% 
 - Is the discount level healthy, and when did it spike?
 - How big is the loyalty segment, and how do its baskets compare?
 - Which payment methods dominate?
+- How much of the discount cost comes from deep discounts, and what should the business do about it?
+
+## Notes on the HTML page
+
+The HTML Content visual is sandboxed, so clicking inside it cannot filter other visuals. Interactivity comes from the synced slicers (every number and insight recalculates) and hover effects.
 
 ## Limitations
 

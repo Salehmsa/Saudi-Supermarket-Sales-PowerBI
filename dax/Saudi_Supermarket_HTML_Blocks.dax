@@ -1,0 +1,96 @@
+DEFINE
+MEASURE Saudi_Supermarket_Sales[HTML CSS] = "<style>body{font-family:Segoe UI,Arial,sans-serif;margin:0}.wrap{background:#F2F6F4;padding:14px;color:#1F2A24}.hd{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(120deg,#003D22,#005931 60%,#2E8B63);color:#fff;border-radius:14px;padding:14px 22px}.hd h1{margin:0;font-size:24px}.hd p{margin:3px 0 0;opacity:.85;font-size:12px}.pill{display:inline-block;background:#E3F0E9;color:#005931;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:600;margin-left:6px}.kp{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:12px 0}.k{background:#fff;border-top:5px solid #005931;border-radius:12px;padding:10px 14px}.k span{font-size:11px;color:#6B7A72;text-transform:uppercase;letter-spacing:.4px}.k b{display:block;font-size:26px;margin:2px 0}.k small{font-size:11px;color:#6B7A72}.g{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:12px}.s4{grid-column:span 4}.s2{grid-column:span 2}.c{background:#fff;border:1px solid #CFE3D8;border-radius:14px;padding:12px 14px;overflow:hidden}.c h3{margin:0 0 8px;font-size:14px;color:#005931}.r{display:flex;align-items:center;margin:4px 0;font-size:12px}.r i{width:105px;font-style:normal;flex:none}.r u{display:block;height:12px;background:#005931;border-radius:6px}.r em{margin-left:6px;font-style:normal;color:#6B7A72}.two{display:flex;gap:14px}.two>div{flex:1}.two .r i{width:62px;font-size:11px}.sub{font-size:10px;color:#6B7A72;text-transform:uppercase;margin-bottom:3px}.cols{display:flex;align-items:flex-end;gap:14px;height:150px}.col{flex:1;text-align:center;font-size:11px}.col u{display:block;margin:2px auto;width:70%;background:linear-gradient(#2E8B63,#005931);border-radius:6px 6px 0 0}.col b{font-size:12px}.chip{display:inline-block;background:#E3F0E9;border-radius:10px;padding:1px 7px;font-size:10px;color:#005931;margin-top:3px}.ins{margin-top:8px;background:#EAF4EE;border-left:4px solid #C9A227;border-radius:8px;padding:6px 10px;font-size:11.5px;line-height:1.4}.t{width:100%;border-collapse:collapse;font-size:12px}.t th{color:#6B7A72;font-weight:600;font-size:10.5px;text-align:right;padding:3px 4px}.t td{text-align:right;padding:5px 4px;border-top:1px solid #E3EDE7}.t th:first-child,.t td:first-child{text-align:left}.bad{background:#FBE9E7;color:#B3261E;font-weight:700;border-radius:6px;padding:1px 6px}.act{display:flex;gap:8px;margin:6px 0;font-size:12px;line-height:1.35}.act i{flex:none;width:20px;height:20px;border-radius:50%;background:#C9A227;color:#fff;text-align:center;font-style:normal;font-weight:700;line-height:20px;font-size:11px}</style>"
+MEASURE Saudi_Supermarket_Sales[HTML Sidebar] =
+VAR f = IF(ISFILTERED(Saudi_Supermarket_Sales[Region]),"Region: " & CONCATENATEX(VALUES(Saudi_Supermarket_Sales[Region]),Saudi_Supermarket_Sales[Region],", ") & " | ","")
+ & IF(ISFILTERED(Saudi_Supermarket_Sales[City]),"City: " & CONCATENATEX(VALUES(Saudi_Supermarket_Sales[City]),Saudi_Supermarket_Sales[City],", ") & " | ","")
+ & IF(ISFILTERED(Saudi_Supermarket_Sales[Category]),"Category: " & CONCATENATEX(VALUES(Saudi_Supermarket_Sales[Category]),Saudi_Supermarket_Sales[Category],", ") & " | ","")
+ & IF(ISFILTERED(Saudi_Supermarket_Sales[CustomerSegment]),"Segment: " & CONCATENATEX(VALUES(Saudi_Supermarket_Sales[CustomerSegment]),Saudi_Supermarket_Sales[CustomerSegment],", ") & " | ","")
+RETURN "<span class='pill'>" & IF(f = "","Filters: none (all data)","Filters: " & LEFT(f,LEN(f) - 3)) & "</span>"
+MEASURE Saudi_Supermarket_Sales[HTML Header] =
+VAR d1 = MIN(Saudi_Supermarket_Sales[Date])
+VAR d2 = MAX(Saudi_Supermarket_Sales[Date])
+RETURN "<div class='hd'><div><h1>Sales Performance - Final Report</h1><p>" & FORMAT(d1,"d mmm yyyy") & " - " & FORMAT(d2,"d mmm yyyy") & " | " & [Transactions] & " invoices | " & DISTINCTCOUNT(Saudi_Supermarket_Sales[City]) & " cities | " & DISTINCTCOUNT(Saudi_Supermarket_Sales[Product]) & " products</p></div><div><span class='pill'>All values in SAR | Net sales exclude VAT</span>" & [HTML Sidebar] & "</div></div>"
+MEASURE Saudi_Supermarket_Sales[HTML KPIs] =
+VAR sel = CALCULATE([Net Sales],ALLSELECTED())
+VAR tc = TOPN(1,VALUES(Saudi_Supermarket_Sales[City]),[Net Sales],DESC)
+VAR tcn = MAXX(tc,Saudi_Supermarket_Sales[City])
+VAR tcv = MAXX(tc,[Net Sales])
+RETURN "<div class='kp'><div class='k'><span>Net Sales</span><b>SAR " & FORMAT([Net Sales],"#,0") & "</b><small>Gross " & FORMAT([Gross Sales],"#,0") & " - discounts " & FORMAT([Discount SAR],"#,0") & "</small></div><div class='k'><span>Total incl. VAT</span><b>SAR " & FORMAT([Total Sales Incl VAT],"#,0") & "</b><small>VAT collected " & FORMAT([VAT Amount],"#,0") & "</small></div><div class='k'><span>Invoices</span><b>" & FORMAT([Transactions],"0") & "</b><small>" & FORMAT([Units Sold],"0") & " units | " & FORMAT([Units per Transaction],"0.0") & " per invoice</small></div><div class='k'><span>Avg Invoice Value</span><b>SAR " & FORMAT([Avg Basket],"0.0") & "</b><small>Net, excluding VAT</small></div><div class='k'><span>Discount Rate</span><b style='color:" & [Discount Status Color] & "'>" & FORMAT([Discount Rate %],"0.0%") & "</b><small>SAR " & FORMAT([Discount SAR],"#,0") & " given on gross sales</small></div><div class='k'><span>Top City</span><b>" & tcn & "</b><small>" & FORMAT(DIVIDE(tcv,sel),"0%") & " of net sales</small></div></div>"
+MEASURE Saudi_Supermarket_Sales[HTML Monthly] =
+VAR t = FILTER(VALUES('Dim Date'[YearMonth]),NOT ISBLANK([Net Sales]))
+VAR mx = MAXX(t,[Net Sales])
+VAR tot = SUMX(t,[Net Sales])
+VAR pk = TOPN(1,t,[Net Sales],DESC)
+VAR pkM = MAXX(pk,'Dim Date'[YearMonth])
+VAR pkV = MAXX(pk,[Net Sales])
+VAR lastM = MAXX(t,'Dim Date'[YearMonth])
+VAR lastV = CALCULATE([Net Sales],'Dim Date'[YearMonth] = lastM)
+VAR ins = IF(COUNTROWS(t) < 2,"Only one month in view.","<b>" & pkM & "</b> is the peak month: SAR " & FORMAT(pkV,"#,0") & " (" & FORMAT(DIVIDE(pkV,tot),"0%") & " of net sales). The latest month (" & lastM & ") is at " & FORMAT(DIVIDE(lastV,pkV),"0%") & " of the peak, and its discount rate is " & FORMAT(CALCULATE([Discount Rate %],'Dim Date'[YearMonth] = lastM),"0.0%") & ".")
+RETURN "<div class='c s4'><h3>Monthly Net Sales Trend (SAR) with discount rate</h3><div class='cols'>" & CONCATENATEX(t,"<div class='col'><b>" & FORMAT([Net Sales],"#,0") & "</b><u style='height:" & FORMAT(DIVIDE([Net Sales],mx) * 100,"0") & "px'></u>" & 'Dim Date'[YearMonth] & "<br><span class='chip'>" & FORMAT([Discount Rate %],"0.0%") & "</span></div>",,'Dim Date'[YearMonth],ASC) & "</div><div class='ins'>" & ins & "</div></div>"
+MEASURE Saudi_Supermarket_Sales[HTML Category] =
+VAR sel = CALCULATE([Net Sales],ALLSELECTED())
+VAR mx = MAXX(ALLSELECTED(Saudi_Supermarket_Sales[Category]),[Net Sales])
+VAR top1 = TOPN(1,VALUES(Saudi_Supermarket_Sales[Category]),[Net Sales],DESC)
+VAR top3 = TOPN(3,VALUES(Saudi_Supermarket_Sales[Category]),[Net Sales],DESC)
+VAR ins = "<b>" & MAXX(top1,Saudi_Supermarket_Sales[Category]) & "</b> leads with " & FORMAT(DIVIDE(MAXX(top1,[Net Sales]),sel),"0%") & " of net sales; the top 3 categories make " & FORMAT(DIVIDE(SUMX(top3,[Net Sales]),sel),"0%") & "."
+RETURN "<div class='c s2'><h3>Category Mix (% of net sales)</h3>" & CONCATENATEX(VALUES(Saudi_Supermarket_Sales[Category]),"<div class='r'><i>" & Saudi_Supermarket_Sales[Category] & "</i><u style='width:" & FORMAT(DIVIDE([Net Sales],mx) * 110,"0") & "px'></u><em>" & FORMAT(DIVIDE([Net Sales],sel),"0.0%") & "</em></div>",,[Net Sales],DESC) & "<div class='ins'>" & ins & "</div></div>"
+MEASURE Saudi_Supermarket_Sales[HTML Geo] =
+VAR sel = CALCULATE([Net Sales],ALLSELECTED())
+VAR mxR = MAXX(ALLSELECTED(Saudi_Supermarket_Sales[Region]),[Net Sales])
+VAR mxC = MAXX(ALLSELECTED(Saudi_Supermarket_Sales[City]),[Net Sales])
+VAR cities = TOPN(8,VALUES(Saudi_Supermarket_Sales[City]),[Net Sales],DESC)
+VAR tr = TOPN(1,VALUES(Saudi_Supermarket_Sales[Region]),[Net Sales],DESC)
+VAR tc = TOPN(1,VALUES(Saudi_Supermarket_Sales[City]),[Net Sales],DESC)
+VAR wc = TOPN(1,VALUES(Saudi_Supermarket_Sales[City]),[Net Sales],ASC)
+VAR ins = "<b>" & MAXX(tr,Saudi_Supermarket_Sales[Region]) & "</b> region drives " & FORMAT(DIVIDE(MAXX(tr,[Net Sales]),sel),"0%") & " of net sales. " & IF(COUNTROWS(VALUES(Saudi_Supermarket_Sales[City])) > 1,"<b>" & MAXX(tc,Saudi_Supermarket_Sales[City]) & "</b> is the top city (" & FORMAT(DIVIDE(MAXX(tc,[Net Sales]),sel),"0%") & ") and <b>" & MAXX(wc,Saudi_Supermarket_Sales[City]) & "</b> the weakest (SAR " & FORMAT(MAXX(wc,[Net Sales]),"#,0") & ").","<b>" & MAXX(tc,Saudi_Supermarket_Sales[City]) & "</b> is the only city in view.")
+RETURN "<div class='c s2'><h3>Region and City Performance (% of net sales)</h3><div class='two'><div><div class='sub'>By region</div>" & CONCATENATEX(VALUES(Saudi_Supermarket_Sales[Region]),"<div class='r'><i>" & Saudi_Supermarket_Sales[Region] & "</i><u style='width:" & FORMAT(DIVIDE([Net Sales],mxR) * 70,"0") & "px'></u><em>" & FORMAT(DIVIDE([Net Sales],sel),"0%") & "</em></div>",,[Net Sales],DESC) & "</div><div><div class='sub'>By city</div>" & CONCATENATEX(cities,"<div class='r'><i>" & Saudi_Supermarket_Sales[City] & "</i><u style='width:" & FORMAT(DIVIDE([Net Sales],mxC) * 70,"0") & "px'></u><em>" & FORMAT(DIVIDE([Net Sales],sel),"0%") & "</em></div>",,[Net Sales],DESC) & "</div></div><div class='ins'>" & ins & "</div></div>"
+MEASURE Saudi_Supermarket_Sales[HTML Segment] =
+VAR sel = CALCULATE([Net Sales],ALLSELECTED())
+VAR upl = FORMAT([Loyalty Basket Uplift vs Regular %],"0%")
+VAR ins = "<b>Loyalty Member</b> brings " & FORMAT([Loyalty Share %],"0%") & " of net sales; their baskets are " & upl & " larger than Regular baskets."
+RETURN "<div class='c s2'><h3>Customer Segments</h3><table class='t'><tr><th>Segment</th><th>% net sales</th><th>Avg invoice</th><th>Discount</th></tr>" & CONCATENATEX(VALUES(Saudi_Supermarket_Sales[CustomerSegment]),"<tr><td>" & Saudi_Supermarket_Sales[CustomerSegment] & "</td><td>" & FORMAT(DIVIDE([Net Sales],sel),"0%") & "</td><td>" & FORMAT([Avg Basket],"0.0") & "</td><td>" & IF([Discount Rate %] > 0.08,"<span class='bad'>" & FORMAT([Discount Rate %],"0.0%") & "</span>",FORMAT([Discount Rate %],"0.0%")) & "</td></tr>",,[Net Sales],DESC) & "</table><div class='ins'>" & ins & "</div></div>"
+MEASURE Saudi_Supermarket_Sales[HTML Payment] =
+VAR sel = CALCULATE([Net Sales],ALLSELECTED())
+VAR mx = MAXX(ALLSELECTED(Saudi_Supermarket_Sales[PaymentMethod]),[Net Sales])
+VAR top1 = TOPN(1,VALUES(Saudi_Supermarket_Sales[PaymentMethod]),[Net Sales],DESC)
+VAR ins = "<b>" & MAXX(top1,Saudi_Supermarket_Sales[PaymentMethod]) & "</b> leads (" & FORMAT(DIVIDE(MAXX(top1,[Net Sales]),sel),"0%") & "). Digital methods (Card, Mada, Apple Pay) make " & FORMAT([Digital Payment Share %],"0%") & " of net sales; cash is " & FORMAT(1 - [Digital Payment Share %],"0%") & "."
+RETURN "<div class='c s2'><h3>Payment Methods (% of net sales)</h3>" & CONCATENATEX(VALUES(Saudi_Supermarket_Sales[PaymentMethod]),"<div class='r'><i>" & Saudi_Supermarket_Sales[PaymentMethod] & "</i><u style='width:" & FORMAT(DIVIDE([Net Sales],mx) * 120,"0") & "px'></u><em>" & FORMAT(DIVIDE([Net Sales],sel),"0%") & " | avg " & FORMAT([Avg Basket],"0.0") & "</em></div>",,[Net Sales],DESC) & "<div class='ins'>" & ins & "</div></div>"
+MEASURE Saudi_Supermarket_Sales[HTML Products] =
+VAR sel = CALCULATE([Net Sales],ALLSELECTED())
+VAR t = TOPN(5,VALUES(Saudi_Supermarket_Sales[Product]),[Net Sales],DESC)
+VAR mx = MAXX(t,[Net Sales])
+VAR top1 = TOPN(1,t,[Net Sales],DESC)
+VAR ins = "Top " & COUNTROWS(t) & " of " & DISTINCTCOUNT(Saudi_Supermarket_Sales[Product]) & " products generate " & FORMAT(DIVIDE(SUMX(t,[Net Sales]),sel),"0%") & " of net sales. #1 <b>" & MAXX(top1,Saudi_Supermarket_Sales[Product]) & "</b> earns SAR " & FORMAT(MAXX(top1,[Net Sales]),"#,0") & "."
+RETURN "<div class='c s2'><h3>Top 5 Products (net sales, SAR)</h3>" & CONCATENATEX(t,"<div class='r'><i>" & Saudi_Supermarket_Sales[Product] & "</i><u style='width:" & FORMAT(DIVIDE([Net Sales],mx) * 110,"0") & "px'></u><em>" & FORMAT([Net Sales],"#,0") & "</em></div>",,[Net Sales],DESC) & "<div class='ins'>" & ins & "</div></div>"
+MEASURE Saudi_Supermarket_Sales[HTML Discount] =
+VAR bands = DATATABLE("Band",STRING,"Lo",DOUBLE,"Hi",DOUBLE,"Ord",INTEGER,{{"No discount",-1,0,1},{"Light (5-10%)",0,0.1,2},{"Heavy (15-20%)",0.1,1,3}})
+VAR hvF = FILTER(ALL(Saudi_Supermarket_Sales[DiscountPct]),Saudi_Supermarket_Sales[DiscountPct] > 0.1)
+VAR hvTx = CALCULATE([Transactions],hvF)
+VAR hvDs = CALCULATE([Discount SAR],hvF)
+VAR ins = IF([Discount SAR] = 0,"No discounting in the current view.","Heavy discounts (15-20%) are <b>" & FORMAT(DIVIDE(hvTx,[Transactions]),"0%") & "</b> of invoices but <b>" & FORMAT(DIVIDE(hvDs,[Discount SAR]),"0%") & "</b> of discount cost.")
+RETURN "<div class='c s2'><h3>Discount Impact (by discount depth)</h3><table class='t'><tr><th>Band</th><th>% invoices</th><th>% net sales</th><th>% disc. cost</th><th>Avg inv.</th></tr>" & CONCATENATEX(bands,
+ VAR f = FILTER(ALL(Saudi_Supermarket_Sales[DiscountPct]),Saudi_Supermarket_Sales[DiscountPct] > [Lo] && Saudi_Supermarket_Sales[DiscountPct] <= [Hi])
+ VAR tx = CALCULATE([Transactions],f)
+ VAR ns = CALCULATE([Net Sales],f)
+ VAR ds = CALCULATE([Discount SAR],f)
+ VAR dsh = DIVIDE(ds,[Discount SAR])
+ RETURN "<tr><td>" & [Band] & "</td><td>" & FORMAT(DIVIDE(tx,[Transactions]),"0%") & "</td><td>" & FORMAT(DIVIDE(ns,[Net Sales]),"0%") & "</td><td>" & IF(dsh > DIVIDE(tx,[Transactions]) && [Ord] = 3,"<span class='bad'>" & FORMAT(dsh,"0%") & "</span>",IF(ISBLANK(ds) || ds = 0,"-",FORMAT(dsh,"0%"))) & "</td><td>" & FORMAT(DIVIDE(ns,tx),"0.0") & "</td></tr>",,[Ord],ASC) & "</table><div class='ins'>" & ins & "</div></div>"
+MEASURE Saudi_Supermarket_Sales[HTML Takeaways] =
+VAR sel = CALCULATE([Net Sales],ALLSELECTED())
+VAR t = FILTER(VALUES('Dim Date'[YearMonth]),NOT ISBLANK([Net Sales]))
+VAR pk = TOPN(1,t,[Net Sales],DESC)
+VAR pkM = MAXX(pk,'Dim Date'[YearMonth])
+VAR pkV = MAXX(pk,[Net Sales])
+VAR lastM = MAXX(t,'Dim Date'[YearMonth])
+VAR lastV = CALCULATE([Net Sales],'Dim Date'[YearMonth] = lastM)
+VAR topCat = MAXX(TOPN(1,VALUES(Saudi_Supermarket_Sales[Category]),[Net Sales],DESC),Saudi_Supermarket_Sales[Category])
+VAR topProd = MAXX(TOPN(1,VALUES(Saudi_Supermarket_Sales[Product]),[Net Sales],DESC),Saudi_Supermarket_Sales[Product])
+VAR wc = TOPN(1,VALUES(Saudi_Supermarket_Sales[City]),[Net Sales],ASC)
+VAR hvF = FILTER(ALL(Saudi_Supermarket_Sales[DiscountPct]),Saudi_Supermarket_Sales[DiscountPct] > 0.1)
+VAR a1 = "<b>Rebuild momentum.</b> " & IF(COUNTROWS(t) < 2,"Only one month in view.","Sales peaked in " & pkM & "; the latest month is at " & FORMAT(DIVIDE(lastV,pkV),"0%") & " of the peak.") & " Push " & topCat & " and " & topProd & "."
+VAR a2 = "<b>Cap deep discounts.</b> " & IF([Discount SAR] = 0,"No discounts in view.","Offers of 15% or more drive " & FORMAT(DIVIDE(CALCULATE([Discount SAR],hvF),[Discount SAR]),"0%") & " of discount cost on " & FORMAT(DIVIDE(CALCULATE([Transactions],hvF),[Transactions]),"0%") & " of invoices.")
+VAR a3 = "<b>Lift weak cities.</b> " & IF(COUNTROWS(VALUES(Saudi_Supermarket_Sales[City])) < 2,"One city in view.",MAXX(wc,Saudi_Supermarket_Sales[City]) & " is the weakest city at SAR " & FORMAT(MAXX(wc,[Net Sales]),"#,0") & "; bundles and loyalty offers can grow basket size.")
+VAR a4 = "<b>Grow loyalty.</b> Loyalty Members bring " & FORMAT([Loyalty Share %],"0%") & " of net sales with baskets " & FORMAT([Loyalty Basket Uplift vs Regular %],"0%") & " larger than Regular."
+RETURN "<div class='c s2'><h3>Key Takeaways and Actions</h3><div class='act'><i>1</i><div>" & a1 & "</div></div><div class='act'><i>2</i><div>" & a2 & "</div></div><div class='act'><i>3</i><div>" & a3 & "</div></div><div class='act'><i>4</i><div>" & a4 & "</div></div></div>"
+MEASURE Saudi_Supermarket_Sales[Report HTML] = "<div class='wrap'><style>.k,.c{transition:all .2s ease}.k:hover,.c:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,89,49,.22)}.r{border-radius:6px;padding:1px 3px}.r:hover{background:#E3F0E9}.r:hover u{background:#C9A227}.r:hover em{color:#005931;font-weight:700}.col:hover u{background:#C9A227}.t tr:hover td{background:#F2F8F4}</style>" & [HTML CSS] & [HTML Header] & [HTML KPIs] & "<div class='g'>" & [HTML Monthly] & [HTML Category] & [HTML Geo] & [HTML Segment] & [HTML Payment] & [HTML Products] & [HTML Discount] & [HTML Takeaways] & "</div></div>"
+EVALUATE ROW("len", LEN([Report HTML]))

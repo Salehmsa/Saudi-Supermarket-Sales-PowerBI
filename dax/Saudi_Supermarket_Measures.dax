@@ -108,8 +108,12 @@ SWITCH ( TRUE (), [Net Sales MoM %] < 0, "#B3261E", [Net Sales MoM %] > 0, "#005
 
 // ---------- 10) Dynamic narrative (for text cards / tooltips) ----------
 Top Region Text =
-VAR _r = TOPN ( 1, ALL ( 'Saudi_Supermarket_Sales'[Region] ), [Net Sales], DESC )
-RETURN MAXX ( _r, 'Saudi_Supermarket_Sales'[Region] ) & " leads with " & FORMAT ( DIVIDE ( MAXX ( _r, [Net Sales] ), CALCULATE ( [Net Sales], ALL ( 'Saudi_Supermarket_Sales'[Region] ) ) ), "0.0%" ) & " of net sales"
+VAR tbl = ADDCOLUMNS ( VALUES ( 'Saudi_Supermarket_Sales'[Region] ), "@s", [Net Sales] )
+VAR topRow = TOPN ( 1, tbl, [@s], DESC )
+VAR r = MAXX ( topRow, 'Saudi_Supermarket_Sales'[Region] )
+VAR s = MAXX ( topRow, [@s] )
+RETURN
+IF ( HASONEVALUE ( 'Saudi_Supermarket_Sales'[Region] ), r & " is the only region in view", r & " leads with " & FORMAT ( DIVIDE ( s, [Net Sales] ), "0.0%" ) & " of net sales" )
 Top Product Text =
 VAR _p = TOPN ( 1, ALL ( 'Saudi_Supermarket_Sales'[Product] ), [Net Sales], DESC )
 RETURN MAXX ( _p, 'Saudi_Supermarket_Sales'[Product] ) & " — SAR " & FORMAT ( MAXX ( _p, [Net Sales] ), "#,##0.00" )
