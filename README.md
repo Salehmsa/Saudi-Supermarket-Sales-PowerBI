@@ -1,5 +1,7 @@
 # Saudi Supermarket Sales: Power BI Dashboard
 
+**English** | [العربية](README.ar.md)
+
 Executive Power BI dashboard on a sample of Saudi supermarket transactions (48 rows, Jan–Jul 2025, SAR). Two pages: an **Executive Overview** (native visuals) and an interactive **HTML Report** (DAX-generated, with written insights).
 
 ![Executive Overview](docs/dashboard.png)
